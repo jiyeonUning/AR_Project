@@ -1,23 +1,66 @@
 using UnityEngine;
-using UnityEngine.XR.ARFoundation;
 
 public class Shooter : MonoBehaviour
 {
-    [SerializeField] GameObject ballLeftPrefab;
-    [SerializeField] GameObject ballRightPrefab;
-    [SerializeField] float shootSpeed;
+    [SerializeField] ObjectPool ObjectPool;
+    [SerializeField] ShooterModel Model;
+    [SerializeField] public Transform muzzlePoint;
 
-    public void ShootLeft()
+    private Touch touch;
+
+
+    private void Start()
     {
-        GameObject ball = Instantiate(ballLeftPrefab, Camera.main.transform.position, Camera.main.transform.rotation);
-        Rigidbody rigidbody = ball.GetComponent<Rigidbody>();
-        rigidbody.velocity = shootSpeed * Camera.main.transform.forward;
+        Model = GetComponent<ShooterModel>();
+        ObjectPool = GetComponent<ObjectPool>();
     }
 
-    public void ShootRight()
+    private void Update()
     {
-        GameObject ball = Instantiate(ballRightPrefab, Camera.main.transform.position, Camera.main.transform.rotation);
-        Rigidbody rigidbody = ball.GetComponent<Rigidbody>();
-        rigidbody.velocity = shootSpeed * Camera.main.transform.forward;
+        if (Input.touchCount > 0)
+        {
+            touch = Input.GetTouch(0);
+
+            switch (touch.phase)
+            {
+                case TouchPhase.Began:
+                    Charge();
+                    break;
+                case TouchPhase.Ended:
+                    Shot();
+                    break;
+            }
+        }
+        else if (Input.GetMouseButton(0))
+        {
+            Charge();
+        }
+        else if (Input.GetMouseButtonDown(0))
+        {
+            Shot();
+        }
     }
+
+
+
+    void Charge()
+    {
+        if (touch.phase == TouchPhase.Stationary)
+        {
+            // 게이지 바 차지 구현       
+        }
+
+
+        if (touch.phase == TouchPhase.Moved)
+        {
+            //공의 각도조절 구현
+        }
+    }
+
+    void Shot()
+    {
+        ObjectPool.GetPool(muzzlePoint.position, muzzlePoint.rotation);
+    }
+
 }
+
