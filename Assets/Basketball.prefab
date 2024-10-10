@@ -144,8 +144,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pooledObject: {fileID: 0}
-  rb: {fileID: 0}
-  ShooterModel: {fileID: 0}
   returnTime: 5
 --- !u!114 &5861823632263846784
 MonoBehaviour:

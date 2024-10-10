@@ -12,8 +12,15 @@ public class Shooter : MonoBehaviour
 
     [SerializeField] public Transform muzzlePoint;
 
+    private PooledObject pooledObject;
+    private Bullet bullet;
+    private Rigidbody rb;
+
     private bool PowerBarMoving = false;
 
+
+    // 공의 transform과 rotate에서 설정한 transfrom rotation 값을 동일하게 해주어 forward값을 바꿀 수 잇게 해주어야 하는데 어떻게 하지
+    // 검색어 : 물체 회전 유니티 어쩌고를 시도해보자
 
     private void Awake()
     {
@@ -36,6 +43,19 @@ public class Shooter : MonoBehaviour
         if (PowerBarMoving == false)
         {
             PowerBarMoving = true;
+
+            // 총알을 대여함과 동시에 해당 값의 정보를 저장
+            pooledObject = ObjectPool.GetPool(muzzlePoint.position, muzzlePoint.rotation);
+
+            // 총알 클래스의 컴포넌트를 가져온다
+            if (pooledObject != null)
+            {
+                bullet = pooledObject.GetComponent<Bullet>();
+                rb = bullet.GetComponent<Rigidbody>();
+            }
+
+            rb.useGravity = false;
+
             StartCoroutine(PowerBarRoutine());
         }
     }
@@ -44,12 +64,9 @@ public class Shooter : MonoBehaviour
     {
         // Model.발사력을 게이지 바와 연동
         Model.ShootSpeed = gauge.value;
-        // 총알을 대여함과 동시에 해당 값의 정보를 저장
-        PooledObject pooledObject =  ObjectPool.GetPool(muzzlePoint.position, muzzlePoint.rotation);
-        // 총알 클래스을 선언, 해당 컴포넌트를 가져와서,
-        Bullet bullet = pooledObject.GetComponent<Bullet>();
-        // 총알 클래스의 발사력과 현재 클래스에서 변동된 발사력을 연동시켜줌으로써 발사력을 조절해줄 수 있다.
-        bullet.ShotSpeed = Model.ShootSpeed;
+        // 발사
+        rb.useGravity = true;
+        rb.velocity = Model.ShootSpeed * Vector3.forward;
 
         PowerBarMoving = false;
     }

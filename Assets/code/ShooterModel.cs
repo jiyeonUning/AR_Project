@@ -9,6 +9,6 @@ public class ShooterModel : MonoBehaviour
 
 
     [SerializeField] float damage; // 데미지 값 (데미지값 = 파워값)
-    public float Damage { get { return damage; } set { damage = shootSpeed; } }
+    public float Damage { get { return damage; } set { damage = ShootSpeed; } }
 
 }
