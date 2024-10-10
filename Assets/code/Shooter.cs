@@ -1,65 +1,43 @@
+using System.Collections;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using UnityEngine.Windows;
-using Input = UnityEngine.Input;
 
 public class Shooter : MonoBehaviour
 {
     [SerializeField] ObjectPool ObjectPool;
     [SerializeField] ShooterModel Model;
+    [SerializeField] PlayerInput input;
+    [SerializeField] Slider gauge;
+
     [SerializeField] public Transform muzzlePoint;
 
-    private Touch touch;
-
-    [SerializeField] Slider gauge;
+    private bool PowerBarMoving = false;
 
 
     private void Awake()
     {
-        gauge = GetComponent<Slider>();
         Model = GetComponent<ShooterModel>();
         ObjectPool = GetComponent<ObjectPool>();
+        input = GetComponent<PlayerInput>();
     }
 
     private void Update()
     {
-        if (Input.touchCount > 0)
-        {
-            touch = Input.GetTouch(0);
-
-            switch (touch.phase)
-            {
-                case TouchPhase.Began:
-                    Charge();
-                    break;
-                case TouchPhase.Ended:
-                    Shot();
-                    break;
-            }
-        }
-        else if (Input.GetMouseButton(0))
-        {
-            Charge();
-        }
-        else if (Input.GetMouseButtonDown(0))
-        {
-            Shot();
-        }
+        if (input.actions["Move"].WasPressedThisFrame()) { Charge(); }
+        if (input.actions["Move"].WasReleasedThisFrame()) { Shot(); }
     }
 
-
+    //======================================================================
+    //======================================================================
 
     void Charge()
     {
-        if (touch.phase == TouchPhase.Stationary)
+        if (PowerBarMoving == false)
         {
-            gauge.value += Time.deltaTime * 1.2f;
-
-            if (touch.phase == TouchPhase.Ended) return;
-            else if (gauge.value > Model.MaxShotSpeed) { gauge.value = Model.MaxShotSpeed; }
+            PowerBarMoving = true;
+            StartCoroutine(PowerBarRoutine());
         }
-        if (touch.phase == TouchPhase.Moved) { Rotate(); }
     }
 
     void Rotate()
@@ -106,9 +84,28 @@ public class Shooter : MonoBehaviour
 
     void Shot()
     {
+        Model.ShootSpeed = gauge.value;
         ObjectPool.GetPool(muzzlePoint.position, muzzlePoint.rotation);
-        gauge.value = Model.MinShotSpeed;
+        PowerBarMoving = false;
     }
 
+    //======================================================================
+    //======================================================================
+
+    IEnumerator PowerBarRoutine()
+    {
+        while (PowerBarMoving)
+        {
+            gauge.value += Time.deltaTime * gauge.maxValue;
+            yield return null;
+        }
+
+        while (PowerBarMoving == false)
+        {
+            gauge.value = gauge.minValue;
+            yield return null;
+        }
+    }
 }
+
 

@@ -7,7 +7,7 @@
             "actions": [
                 {
                     "name": "Move",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "c3874828-e670-4d9b-b2b5-f2db256ddd39",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -19,21 +19,10 @@
                 {
                     "name": "",
                     "id": "a2568056-9081-4a2e-adb6-ac98a1fb5ee5",
-                    "path": "<Touchscreen>/Delta",
+                    "path": "<Touchscreen>/Press",
                     "interactions": "",
                     "processors": "",
                     "groups": "Touch",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "80d0d3d3-1c8d-4c02-b9fe-cc1bb7f6d134",
-                    "path": "<Mouse>/press",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Mouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -48,17 +37,6 @@
             "devices": [
                 {
                     "devicePath": "<Touchscreen>",
-                    "isOptional": false,
-                    "isOR": false
-                }
-            ]
-        },
-        {
-            "name": "Mouse",
-            "bindingGroup": "Mouse",
-            "devices": [
-                {
-                    "devicePath": "<Mouse>",
                     "isOptional": false,
                     "isOR": false
                 }
