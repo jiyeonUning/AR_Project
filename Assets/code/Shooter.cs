@@ -18,9 +18,7 @@ public class Shooter : MonoBehaviour
 
     private bool PowerBarMoving = false;
 
-
-    // 공의 transform과 rotate에서 설정한 transfrom rotation 값을 동일하게 해주어 forward값을 바꿀 수 잇게 해주어야 하는데 어떻게 하지
-    // 검색어 : 물체 회전 유니티 어쩌고를 시도해보자
+    //***********************************************
 
     private void Awake()
     {
@@ -47,14 +45,13 @@ public class Shooter : MonoBehaviour
             // 총알을 대여함과 동시에 해당 값의 정보를 저장
             pooledObject = ObjectPool.GetPool(muzzlePoint.position, muzzlePoint.rotation);
 
-            // 총알 클래스의 컴포넌트를 가져온다
+            // 총알 클래스의 컴포넌트를 가져와 생성된 총알의 중력을 없애 플레이어 눈 앞에 고정시킨다.
             if (pooledObject != null)
             {
                 bullet = pooledObject.GetComponent<Bullet>();
                 rb = bullet.GetComponent<Rigidbody>();
+                rb.useGravity = false;
             }
-
-            rb.useGravity = false;
 
             StartCoroutine(PowerBarRoutine());
         }
@@ -87,6 +84,20 @@ public class Shooter : MonoBehaviour
             gauge.value = gauge.minValue;
             yield return null;
         }
+    }
+
+    //======================================================================
+    //======================================================================
+
+    void Rotate()
+    {
+        //Vector3 rotateValue = ;
+
+        //if (input.actions["Move"].WasPressedThisFrame())
+        //{
+        //    transform.Rotate(rotateValue.x, rotateValue.y, 0);
+        //}
+
     }
 }
 

@@ -5,11 +5,8 @@ public class Bullet : MonoBehaviour
     [SerializeField] PooledObject pooledObject;
     private Rigidbody rb;
 
-    //[SerializeField] public float ShotSpeed;
     [SerializeField] float returnTime;
              private float remainTime;
-
-
 
     private void Awake()
     {
