@@ -6,13 +6,22 @@
             "id": "3a32772f-ab3a-4008-aa93-db1afa7d79f6",
             "actions": [
                 {
-                    "name": "Move",
+                    "name": "Shot",
                     "type": "PassThrough",
                     "id": "c3874828-e670-4d9b-b2b5-f2db256ddd39",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "6ef69111-0b2b-425a-ab8d-a28613c96e75",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -20,6 +29,17 @@
                     "name": "",
                     "id": "a2568056-9081-4a2e-adb6-ac98a1fb5ee5",
                     "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Touch",
+                    "action": "Shot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cda7a521-d9c9-4d18-b7a2-0030438b3a85",
+                    "path": "<Touchscreen>/delta",
                     "interactions": "",
                     "processors": "",
                     "groups": "Touch",
