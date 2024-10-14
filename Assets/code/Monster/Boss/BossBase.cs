@@ -1,11 +1,11 @@
-public interface IState
+public interface IbossState
 {
     public void Enter();
     public void Update();
     public void Exit();
 }
 
-public class MonsterBase : IState
+public class BossBase : IbossState
 {
     public virtual void Enter() { }
     public virtual void Update() { }

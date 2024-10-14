@@ -63,7 +63,7 @@ public class Shooter : MonoBehaviour
         Model.ShootSpeed = gauge.value;
         // น฿ป็
         rb.useGravity = true;
-        rb.velocity = Model.ShootSpeed * Vector3.forward;
+        rb.velocity = Model.ShootSpeed * muzzlePoint.forward;
 
         PowerBarMoving = false;
     }
@@ -84,20 +84,6 @@ public class Shooter : MonoBehaviour
             gauge.value = gauge.minValue;
             yield return null;
         }
-    }
-
-    //======================================================================
-    //======================================================================
-
-    void Rotate()
-    {
-        //Vector3 rotateValue = ;
-
-        //if (input.actions["Move"].WasPressedThisFrame())
-        //{
-        //    transform.Rotate(rotateValue.x, rotateValue.y, 0);
-        //}
-
     }
 }
 
